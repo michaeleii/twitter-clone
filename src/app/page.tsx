@@ -1,9 +1,15 @@
+import SearchBar from "@/components/SearchBar";
 import PostList from "@/components/post-list";
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams: { query?: string };
+}) {
   return (
     <div>
-      <PostList />
+      <SearchBar />
+      <PostList query={searchParams.query} />
     </div>
   );
 }

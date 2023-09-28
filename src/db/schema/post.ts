@@ -6,23 +6,23 @@ import {
   pgTable,
   AnyPgColumn,
 } from "drizzle-orm/pg-core";
-import { usersTable } from "./user";
+import { userTable } from "./user";
 import { mediaTable } from "./media";
 import { sql } from "drizzle-orm";
 
-export const postsTable = pgTable("posts", {
+export const postTable = pgTable("post", {
   id: serial("id").primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => userTable.id),
   mediaId: integer("media_id")
     .references(() => mediaTable.id)
     .default(sql`NULL`),
-  replyId: integer("reply_id").references((): AnyPgColumn => postsTable.id),
+  replyId: integer("reply_id").references((): AnyPgColumn => postTable.id),
   content: text("content").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
 });
 
-export type Post = typeof postsTable.$inferSelect;
+export type Post = typeof postTable.$inferSelect;

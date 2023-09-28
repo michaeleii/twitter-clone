@@ -7,21 +7,22 @@ import { User } from "@/db/schema/user";
 import { Media } from "@/db/schema/media";
 
 type PostProps = {
-  post: Post;
-  user: User;
-  media: Media;
+  post: Post & {
+    user: User;
+    media: Media;
+  };
 };
 
-export default function PostItem({ post, user, media }: PostProps) {
+export default function PostItem({ post }: PostProps) {
   return (
     <article className="flex flex-col gap-4 py-4 px-4 relative border rounded-lg">
       <div className="flex gap-4 items-start">
-        <Link href={`/${user.username}`}>
+        <Link href={`/${post.user.username}`}>
           <div className="rounded-full h-10 w-10 overflow-hidden relative">
             <Image
               className="object-cover"
-              src={user.avatar}
-              alt={user.username}
+              src={post.user.avatar}
+              alt={post.user.username}
               priority={true}
               fill={true}
             />
@@ -29,8 +30,8 @@ export default function PostItem({ post, user, media }: PostProps) {
         </Link>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
-            <Link href={`/${user.username}`}>
-              <div>{user.username}</div>
+            <Link href={`/${post.user.username}`}>
+              <div>{post.user.username}</div>
             </Link>
             <p className="dark:text-neutral-400 text-neutral-600">
               {timeAgoShort(new Date(post.createdAt))}
@@ -39,12 +40,12 @@ export default function PostItem({ post, user, media }: PostProps) {
           <Link href={`/post/${post.id}`}>
             <p className="font-light">{post.content}</p>
           </Link>
-          {media.type === "image" && (
+          {post.media.type === "image" && (
             <Image
-              src={media.url}
-              alt={media.url}
-              width={media.width}
-              height={media.height}
+              src={post.media.url}
+              alt={post.media.url}
+              width={post.media.width}
+              height={post.media.height}
               className="rounded-xl"
             />
           )}

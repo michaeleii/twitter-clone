@@ -1,6 +1,6 @@
 import { text, varchar, pgTable, timestamp } from "drizzle-orm/pg-core";
 
-export const usersTable = pgTable("users", {
+export const userTable = pgTable("user", {
   id: text("id").primaryKey(),
   username: varchar("username", { length: 30 }).notNull(),
   firstName: varchar("first_name", { length: 50 }).notNull(),
@@ -11,4 +11,4 @@ export const usersTable = pgTable("users", {
     .defaultNow(),
 });
 
-export type User = typeof usersTable.$inferSelect;
+export type User = typeof userTable.$inferSelect;
