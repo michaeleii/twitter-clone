@@ -1,4 +1,4 @@
-import { db, eq } from "@/db";
+import { db, desc, eq } from "@/db";
 
 import { postTable } from "@/db/schema/post";
 import { userTable } from "@/db/schema/user";
@@ -25,6 +25,8 @@ export const query = db
   .from(postTable)
   .innerJoin(userTable, eq(userTable.id, postTable.userId))
   .leftJoin(mediaTable, eq(mediaTable.id, postTable.mediaId))
+  .orderBy(desc(postTable.createdAt))
+  .limit(100)
   .prepare("select_posts_for_feed");
 
 export type Result = Awaited<ReturnType<typeof query.execute>>[0];
