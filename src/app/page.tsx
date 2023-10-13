@@ -1,4 +1,5 @@
 import SearchBar from "@/components/SearchBar";
+import MainContainer from "@/components/main-container";
 import PostList from "@/components/post-list";
 
 export default function Home({
@@ -7,8 +8,8 @@ export default function Home({
   searchParams: { query?: string };
 }) {
   return (
-    <main className="max-7xl p-5">
+    <MainContainer>
       <PostList />
-    </main>
+    </MainContainer>
   );
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getUserByUsername } from "@/db/queries/profile";
 import ErrorMessage from "@/components/error-message";
+import MainContainer from "@/components/main-container";
 
 type ProfileProps = {
   params: {
@@ -22,7 +23,7 @@ export default async function Profile({ params }: ProfileProps) {
   }
 
   return (
-    <main className="max-w-xl mx-auto p-5">
+    <MainContainer>
       <div className="flex justify-between">
         <div>
           <h2 className="text-3xl font-semibold">
@@ -54,6 +55,6 @@ export default async function Profile({ params }: ProfileProps) {
           ))}
         </div>
       </div> */}
-    </main>
+    </MainContainer>
   );
 }

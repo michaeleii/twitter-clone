@@ -1,6 +1,8 @@
+import MainContainer from "@/components/main-container";
+
 export default function CreatePost() {
   return (
-    <main className="text-center mt-10 max-w-xl mx-auto">
+    <MainContainer>
       <form className="border border-neutral-500 rounded-lg px-6 py-4 flex flex-col gap-4">
         <label className="w-full">
           <textarea
@@ -16,6 +18,6 @@ export default function CreatePost() {
           Post
         </button>
       </form>
-    </main>
+    </MainContainer>
   );
 }

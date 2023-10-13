@@ -36,7 +36,7 @@ export default function PostItem({ post }: PostProps) {
           <Link href={`/post/${post.id}`}>
             <p className="font-light">{post.content}</p>
           </Link>
-          {/* {post.media.type === "image" && (
+          {post.media && post.media.type === "image" && (
             <Image
               src={post.media.url}
               alt={post.media.url}
@@ -44,7 +44,7 @@ export default function PostItem({ post }: PostProps) {
               height={post.media.height}
               className="rounded-xl"
             />
-          )} */}
+          )}
           {/* <PostActions /> */}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import ErrorMessage from "@/components/error-message";
+import MainContainer from "@/components/main-container";
 import PostItem from "@/components/post";
 
 import { getPostById } from "@/db/queries/singlePost";
@@ -20,8 +21,8 @@ export default async function SinglePost({
     notFound();
   }
   return (
-    <div className="max-w-5xl mx-auto p-5">
+    <MainContainer>
       <PostItem post={post} />
-    </div>
+    </MainContainer>
   );
 }
