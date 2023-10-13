@@ -1,8 +1,7 @@
-import { db, eq } from "@/db";
-import { User, userTable } from "@/db/schema/user";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { getUserByUsername } from "@/db/queries/profile";
 
 type ProfileProps = {
   params: {
@@ -11,16 +10,9 @@ type ProfileProps = {
 };
 
 export default async function Profile({ params }: ProfileProps) {
-  let user: User | undefined;
-
-  try {
-    user = await db
-      .select()
-      .from(userTable)
-      .where(eq(userTable.username, params.username))
-      .then((result) => result[0]);
-  } catch (e) {
-    if (e instanceof Error) console.error(e);
+  const { user, userError } = await getUserByUsername(params.username);
+  if (userError) {
+    console.error(userError);
     return <div>error connecting to database</div>;
   }
 
