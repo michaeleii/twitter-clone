@@ -7,9 +7,8 @@ export default function Home({
   searchParams: { query?: string };
 }) {
   return (
-    <div>
-      <SearchBar />
-      <PostList query={searchParams.query} />
-    </div>
+    <main className="max-7xl p-5">
+      <PostList />
+    </main>
   );
 }

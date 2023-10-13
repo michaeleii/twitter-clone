@@ -2,22 +2,18 @@ import Link from "next/link";
 import Image from "next/image";
 
 import timeAgoShort from "@/utils/timeAgoShort";
-import { Post } from "@/db/schema/post";
-import { User } from "@/db/schema/user";
-import { Media } from "@/db/schema/media";
+
+import { type Result as Post } from "@/db/queries/postList";
 
 type PostProps = {
-  post: Post & {
-    user: User;
-    media: Media;
-  };
+  post: Post;
 };
 
 export default function PostItem({ post }: PostProps) {
   return (
-    <article className="flex flex-col gap-4 py-4 px-4 relative border rounded-lg">
+    <article className="flex flex-col gap-4 py-4 px-4 relative rounded-lg">
       <div className="flex gap-4 items-start">
-        <Link href={`/${post.user.username}`}>
+        <Link href={`/profile/${post.user.username}`}>
           <div className="rounded-full h-10 w-10 overflow-hidden relative">
             <Image
               className="object-cover"
@@ -30,7 +26,7 @@ export default function PostItem({ post }: PostProps) {
         </Link>
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
-            <Link href={`/${post.user.username}`}>
+            <Link href={`/profile/${post.user.username}`}>
               <div>{post.user.username}</div>
             </Link>
             <p className="dark:text-neutral-400 text-neutral-600">
@@ -40,7 +36,7 @@ export default function PostItem({ post }: PostProps) {
           <Link href={`/post/${post.id}`}>
             <p className="font-light">{post.content}</p>
           </Link>
-          {post.media.type === "image" && (
+          {/* {post.media.type === "image" && (
             <Image
               src={post.media.url}
               alt={post.media.url}
@@ -48,7 +44,7 @@ export default function PostItem({ post }: PostProps) {
               height={post.media.height}
               className="rounded-xl"
             />
-          )}
+          )} */}
           {/* <PostActions /> */}
         </div>
       </div>
