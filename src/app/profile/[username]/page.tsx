@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getUserByUsername } from "@/db/queries/profile";
+import ErrorMessage from "@/components/error-message";
 
 type ProfileProps = {
   params: {
@@ -13,7 +14,7 @@ export default async function Profile({ params }: ProfileProps) {
   const { user, userError } = await getUserByUsername(params.username);
   if (userError) {
     console.error(userError);
-    return <div>error connecting to database</div>;
+    return <ErrorMessage message="Error connecting to database." />;
   }
 
   if (!user) {

@@ -1,3 +1,4 @@
+import ErrorMessage from "@/components/error-message";
 import PostItem from "@/components/post";
 
 import { getPostById } from "@/db/queries/singlePost";
@@ -12,7 +13,7 @@ export default async function SinglePost({
 
   if (postError) {
     console.error(postError);
-    return <div>Error connecting to database</div>;
+    return <ErrorMessage message="Error connecting to database." />;
   }
 
   if (!post) {
