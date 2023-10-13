@@ -1,12 +1,31 @@
-const handleSubmit = (formData: FormData) => {
+import { createPost } from "@/db/queries/createPost";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
+async function handleCreatePost(formData: FormData) {
   "use server";
-  console.log(formData);
-};
+  const content = formData.get("content") as string;
+
+  const { id, createPostError } = await createPost({
+    content,
+    userId: "3",
+  });
+
+  if (createPostError) {
+    return console.error(createPostError);
+  }
+
+  if (!id) {
+    return console.error("No ID returned from createPost");
+  }
+
+  redirect(`/post/${id}`);
+}
 
 export default function CreatePostForm() {
   return (
     <form
-      action={handleSubmit}
+      action={handleCreatePost}
       className="border border-neutral-500 rounded-lg px-6 py-4 flex flex-col gap-4"
     >
       <label className="w-full">

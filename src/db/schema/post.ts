@@ -26,3 +26,5 @@ export const postTable = pgTable("post", {
 });
 
 export type Post = typeof postTable.$inferSelect;
+
+export type CreatePost = typeof postTable.$inferInsert;

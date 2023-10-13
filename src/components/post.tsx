@@ -24,7 +24,7 @@ export default function PostItem({ post }: PostProps) {
             />
           </div>
         </Link>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
           <div className="flex justify-between">
             <Link href={`/profile/${post.user.username}`}>
               <div>{post.user.username}</div>

@@ -67,7 +67,7 @@ export default function NavBar({ className }: { className?: string }) {
         </svg>
       </Link>
       <Link
-        href="/sam"
+        href="/profile/sam"
         className="hover:bg-neutral-100 dark:hover:bg-neutral-900 flex justify-center items-center h-14 w-20 rounded-md transition-all fill-none stroke-neutral-600"
       >
         <svg
