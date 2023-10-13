@@ -1,3 +1,4 @@
+import NavBar from "@/components/navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,6 +21,9 @@ export default function RootLayout({
       <body
         className={twMerge(inter.className, "dark:bg-black dark:text-white")}
       >
+        <header className="fixed left-0 right-0 bottom-0 sm:top-0 h-20 bg-white/80 dark:bg-black/80 backdrop-blur-xl z-10">
+          <NavBar className="max-w-lg m-auto" />
+        </header>
         {children}
       </body>
     </html>
