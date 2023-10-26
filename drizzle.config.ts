@@ -12,4 +12,5 @@ export default {
     connectionString: process.env.MIGRATION_DATABASE_URL!,
   },
   out: "./drizzle",
+  tablesFilter: ["twitter-clone_*"],
 } satisfies Config;

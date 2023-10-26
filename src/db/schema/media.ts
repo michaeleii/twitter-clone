@@ -2,10 +2,12 @@ import {
   serial,
   text,
   integer,
-  pgTable,
   pgEnum,
   timestamp,
+  pgTableCreator,
 } from "drizzle-orm/pg-core";
+
+export const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
 
 export const mediaType = pgEnum("media_type", ["image", "video"]);
 
