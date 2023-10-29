@@ -1,27 +1,20 @@
 "use server";
 
-import { createPost } from "@/db/queries/createPost";
+import { action } from "@/utils/safe-action";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { mightFail } from "might-fail";
+import { db } from "@/db";
+import { insertPostSchema, postTable } from "@/db/schema/post";
 
-export async function handleCreatePost(formData: FormData) {
-  "use server";
-  const content = formData.get("content") as string;
+const formSchema = insertPostSchema;
 
-  if (content.length <= 3) return;
+export const createPost = action(formSchema, async (newPost) => {
+  const { error } = await mightFail(db.insert(postTable).values(newPost));
 
-  const { id, createPostError } = await createPost({
-    content,
-    userId: "3",
-  });
-
-  if (createPostError) {
-    return console.error(createPostError);
-  }
-
-  if (!id) {
-    return console.error("No ID returned from createPost");
+  if (error) {
+    return console.error(error);
   }
   revalidatePath(`/`);
   redirect(`/`);
-}
+});

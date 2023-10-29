@@ -14,6 +14,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^0.6.0",
     "drizzle-orm": "^0.28.6",
+    "drizzle-zod": "^0.5.1",
     "might-fail": "^0.2.0",
     "next": "latest",
     "next-safe-action": "v4",
