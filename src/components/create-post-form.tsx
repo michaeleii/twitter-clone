@@ -1,6 +1,7 @@
 import { createPost } from "@/db/queries/createPost";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import SubmitButton from "./submit-button";
 
 async function handleCreatePost(formData: FormData) {
   "use server";
@@ -39,10 +40,7 @@ export default function CreatePostForm() {
           required
         />
       </label>
-
-      <button type="submit" className="border rounded-xl px-4 py-2">
-        Post
-      </button>
+      <SubmitButton />
     </form>
   );
 }
