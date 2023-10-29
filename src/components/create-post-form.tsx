@@ -6,12 +6,14 @@ import { twMerge } from "tailwind-merge";
 
 export default function CreatePostForm() {
   const [content, setContent] = useState("");
-
-  const buttonDisabled = content.length < 3;
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     await createPost({ content, userId: "3" });
+    setContent("");
+    setIsLoading(false);
   };
 
   return (
@@ -37,10 +39,10 @@ export default function CreatePostForm() {
           type="submit"
           className={twMerge(
             "border rounded-xl px-4 py-2 disabled",
-            buttonDisabled && "opacity-50"
+            isLoading && "opacity-50"
           )}
-          disabled={buttonDisabled}
-          aria-disabled={buttonDisabled}
+          disabled={isLoading}
+          aria-disabled={isLoading}
         >
           Post
         </button>
