@@ -3,13 +3,15 @@ import {
   text,
   timestamp,
   integer,
-  pgTable,
   AnyPgColumn,
+  pgTableCreator,
 } from "drizzle-orm/pg-core";
 import { userTable } from "./user";
 import { mediaTable } from "./media";
 import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
+
+const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
 
 export const postTable = pgTable("post", {
   id: serial("id").primaryKey(),

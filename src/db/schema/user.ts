@@ -1,4 +1,6 @@
-import { text, varchar, pgTable, timestamp } from "drizzle-orm/pg-core";
+import { text, varchar, timestamp, pgTableCreator } from "drizzle-orm/pg-core";
+
+const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
 
 export const userTable = pgTable("user", {
   id: text("id").primaryKey(),
