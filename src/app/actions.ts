@@ -7,11 +7,8 @@ import { mightFail } from "might-fail";
 import { db } from "@/db";
 import { insertPostSchema, postTable } from "@/db/schema/post";
 
-const formSchema = insertPostSchema;
-
-export const createPost = action(formSchema, async (newPost) => {
+export const createPost = action(insertPostSchema, async (newPost) => {
   const { error } = await mightFail(db.insert(postTable).values(newPost));
-
   if (error) {
     return console.error(error);
   }
