@@ -11,8 +11,6 @@ import { mediaTable } from "./media";
 import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 
-const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
-
 export const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
 
 export const postTable = pgTable("post", {
