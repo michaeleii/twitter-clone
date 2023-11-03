@@ -9,6 +9,9 @@ import {
 import { userTable } from "./user";
 import { mediaTable } from "./media";
 import { sql } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-zod";
+
+const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
 
 export const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
 
@@ -29,4 +32,5 @@ export const postTable = pgTable("post", {
 
 export type Post = typeof postTable.$inferSelect;
 
-export type CreatePost = typeof postTable.$inferInsert;
+// Schema for inserting a post - can be used to validate API requests
+export const insertPostSchema = createInsertSchema(postTable);

@@ -1,46 +1,52 @@
-import { createPost } from "@/db/queries/createPost";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+"use client";
 
-async function handleCreatePost(formData: FormData) {
-  "use server";
-  const content = formData.get("content") as string;
-
-  const { id, createPostError } = await createPost({
-    content,
-    userId: "3",
-  });
-
-  if (createPostError) {
-    return console.error(createPostError);
-  }
-
-  if (!id) {
-    return console.error("No ID returned from createPost");
-  }
-
-  redirect(`/post/${id}`);
-}
+import { createPost } from "@/app/actions";
+import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 export default function CreatePostForm() {
-  return (
-    <form
-      action={handleCreatePost}
-      className="border border-neutral-500 rounded-lg px-6 py-4 flex flex-col gap-4"
-    >
-      <label className="w-full">
-        <textarea
-          className="bg-transparent flex-1 border-none outline-none w-full"
-          name="content"
-          placeholder="Post a thing..."
-          rows={5}
-          required
-        />
-      </label>
+  const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-      <button type="submit" className="border rounded-xl px-4 py-2">
-        Post
-      </button>
-    </form>
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    await createPost({ content, userId: "3" });
+    setContent("");
+    setIsLoading(false);
+  };
+
+  return (
+    <main className="text-center mt-10">
+      <form
+        onSubmit={handleSubmit}
+        className="border border-neutral-500 rounded-lg px-6 py-4 flex flex-col gap-4"
+      >
+        <label className="w-full">
+          <textarea
+            className="bg-transparent flex-1 border-none outline-none w-full"
+            name="content"
+            placeholder="Post a thing..."
+            required
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </label>
+
+        <div className="text-neutral-500">Characters: {content.length}</div>
+
+        <button
+          type="submit"
+          className={twMerge(
+            "border rounded-xl px-4 py-2 disabled",
+            isLoading && "opacity-50"
+          )}
+          disabled={isLoading}
+          aria-disabled={isLoading}
+        >
+          Post
+        </button>
+      </form>
+    </main>
   );
 }
