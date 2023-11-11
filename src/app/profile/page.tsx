@@ -13,15 +13,18 @@ export default async function Profile() {
   return (
     <MainContainer>
       <>
-        {session.user.name}
-        {session.user.email}
-
-        <SignoutButton
-          signOut={async () => {
-            "use server";
-            await signOut({ redirectTo: "/" });
-          }}
-        />
+        <div className="flex flex-col gap-5">
+          <span> {session.user.name}</span>
+          <span>{session.user.email}</span>
+        </div>
+        <div className="mt-5 text-right">
+          <SignoutButton
+            signOut={async () => {
+              "use server";
+              await signOut({ redirectTo: "/" });
+            }}
+          />
+        </div>
       </>
     </MainContainer>
   );
