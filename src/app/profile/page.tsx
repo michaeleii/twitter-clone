@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import MainContainer from "@/components/main-container";
 import { auth, signOut } from "@/auth";
 import SignoutButton from "./signout-button";
