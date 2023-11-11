@@ -13,12 +13,12 @@ export default function PostItem({ post }: PostProps) {
   return (
     <article className="flex flex-col gap-4 py-4 px-4 relative rounded-lg">
       <div className="flex gap-4 items-start">
-        <Link href={`/profile/${post.user.username}`}>
+        <Link href={`/profile/${post.user.name}`}>
           <div className="rounded-full h-10 w-10 overflow-hidden relative">
             <Image
               className="object-cover"
-              src={post.user.avatar}
-              alt={post.user.username}
+              src={post.user.image || "/images/default-profile.png"}
+              alt={post.user.name || ""}
               priority={true}
               fill={true}
             />
@@ -26,8 +26,8 @@ export default function PostItem({ post }: PostProps) {
         </Link>
         <div className="flex flex-col gap-2 w-full">
           <div className="flex justify-between">
-            <Link href={`/profile/${post.user.username}`}>
-              <div>{post.user.username}</div>
+            <Link href={`/profile/${post.user.name?.replace(" ", "-")}`}>
+              <div>{post.user.name}</div>
             </Link>
             <p className="dark:text-neutral-400 text-neutral-600">
               {timeAgoShort(new Date(post.createdAt))}
