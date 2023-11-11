@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@auth/core": "^0.18.0",
+    "@auth/drizzle-adapter": "^0.3.5",
     "@neondatabase/serverless": "^0.6.0",
     "drizzle-orm": "^0.28.6",
     "drizzle-zod": "^0.5.1",

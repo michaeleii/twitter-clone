@@ -8,6 +8,9 @@ dependencies:
   '@auth/core':
     specifier: ^0.18.0
     version: 0.18.0
+  '@auth/drizzle-adapter':
+    specifier: ^0.3.5
+    version: 0.3.5
   '@neondatabase/serverless':
     specifier: ^0.6.0
     version: 0.6.0
@@ -122,6 +125,14 @@ packages:
       oauth4webapi: 2.3.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/drizzle-adapter@0.3.5:
+    resolution: {integrity: sha512-pZCnZ8vrqUD+C4uc4MiRj+Ox7NLXze6yzWHdtAgK1QMj9PgvUtBsJu02mAYJCyCchWVzdvPG25e9+B6L2mLRBg==}
+    dependencies:
+      '@auth/core': 0.18.0
+    transitivePeerDependencies:
+      - nodemailer
     dev: false
 
   /@babel/runtime@7.23.2:

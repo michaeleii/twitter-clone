@@ -1,7 +1,7 @@
 import { db, desc, eq } from "@/db";
 
 import { postTable } from "@/db/schema/post";
-import { userTable } from "@/db/schema/user";
+import { users } from "@/db/schema/user";
 import { mediaTable } from "@/db/schema/media";
 import { mightFail } from "might-fail";
 
@@ -12,9 +12,9 @@ export const getAllPosts = async () => {
       content: postTable.content,
       createdAt: postTable.createdAt,
       user: {
-        id: userTable.id,
-        username: userTable.username,
-        avatar: userTable.avatar,
+        id: users.id,
+        name: users.name,
+        image: users.image,
       },
       media: {
         id: mediaTable.id,
@@ -25,7 +25,7 @@ export const getAllPosts = async () => {
       },
     })
     .from(postTable)
-    .innerJoin(userTable, eq(userTable.id, postTable.userId))
+    .innerJoin(users, eq(users.id, postTable.userId))
     .leftJoin(mediaTable, eq(mediaTable.id, postTable.mediaId))
     .orderBy(desc(postTable.createdAt))
     .limit(100)

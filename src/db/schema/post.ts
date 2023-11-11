@@ -6,18 +6,18 @@ import {
   AnyPgColumn,
   pgTableCreator,
 } from "drizzle-orm/pg-core";
-import { userTable } from "./user";
+import { users } from "./user";
 import { mediaTable } from "./media";
 import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 
-export const pgTable = pgTableCreator((name) => `twitter-clone_${name}`);
+export const pgTable = pgTableCreator((name) => `twitter_clone_${name}`);
 
 export const postTable = pgTable("post", {
   id: serial("id").primaryKey(),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id),
+    .references(() => users.id),
   mediaId: integer("media_id")
     .references(() => mediaTable.id)
     .default(sql`NULL`),
