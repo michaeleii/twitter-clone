@@ -4,14 +4,14 @@ import { createPost } from "@/app/actions";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-export default function CreatePostForm() {
+export default function CreatePostForm({ userId }: { userId: string }) {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await createPost({ content, userId: "3" });
+    await createPost({ content, userId });
     setContent("");
     setIsLoading(false);
   };
