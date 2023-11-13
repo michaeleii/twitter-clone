@@ -1,5 +1,6 @@
 "use client";
 
+import { getSignedURL } from "@/app/create/actions";
 import Image from "next/image";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -26,6 +27,16 @@ export default function CreatePostForm({
 
     // Do all the image upload and everything
     console.log(content, file);
+
+    const signedURLResult = await getSignedURL();
+    if (signedURLResult.failure !== undefined) {
+      setStatusMessage("Failed to create post");
+      setLoading(false);
+      console.error("error");
+      return;
+    }
+    const url = signedURLResult.success.url;
+    console.log(url);
 
     setStatusMessage("created");
     setLoading(false);

@@ -14,6 +14,8 @@
   "dependencies": {
     "@auth/core": "^0.18.0",
     "@auth/drizzle-adapter": "^0.3.5",
+    "@aws-sdk/client-s3": "^3.450.0",
+    "@aws-sdk/s3-request-presigner": "^3.450.0",
     "@neondatabase/serverless": "^0.6.0",
     "drizzle-orm": "^0.28.6",
     "drizzle-zod": "^0.5.1",
