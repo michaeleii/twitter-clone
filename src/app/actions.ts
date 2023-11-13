@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 import { mightFail } from "might-fail";
 import { db } from "@/db";
 import { insertPostSchema, postTable } from "@/db/schema/post";
-import { EXPORT_DETAIL } from "next/dist/shared/lib/constants";
 import { auth } from "@/auth";
 
 export const createPost = action(insertPostSchema, async (newPost) => {
