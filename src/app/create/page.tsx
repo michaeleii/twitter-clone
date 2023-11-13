@@ -10,7 +10,7 @@ export default async function CreatePost() {
   }
   return (
     <MainContainer>
-      <CreatePostForm userId={session.user.id} />
+      <CreatePostForm user={session.user} />
     </MainContainer>
   );
 }

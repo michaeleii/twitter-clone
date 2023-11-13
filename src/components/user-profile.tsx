@@ -14,8 +14,8 @@ export default function UserProfile({ user }: UserProfileProps) {
           <span>{user.email}</span>
         </div>
         <Image
-          src={user.image || ""}
-          alt={user.name || ""}
+          src={user.image || "https://www.gravatar.com/avatar/?d=mp"}
+          alt={user.name || "user profile picture"}
           width={100}
           height={100}
           className="rounded-full mb-3"
