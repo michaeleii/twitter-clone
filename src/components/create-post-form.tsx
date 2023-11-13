@@ -28,15 +28,27 @@ export default function CreatePostForm({
     // Do all the image upload and everything
     console.log(content, file);
 
-    const signedURLResult = await getSignedURL();
-    if (signedURLResult.failure !== undefined) {
-      setStatusMessage("Failed to create post");
-      setLoading(false);
-      console.error("error");
-      return;
+    if (file) {
+      setStatusMessage("uploading file");
+      const signedURLResult = await getSignedURL();
+
+      if (signedURLResult.failure !== undefined) {
+        setStatusMessage("Failed to create post");
+        setLoading(false);
+        console.error("error");
+        return;
+      }
+
+      const url = signedURLResult.success.url;
+
+      await fetch(url, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file?.type ?? "application/octet-stream",
+        },
+      });
     }
-    const url = signedURLResult.success.url;
-    console.log(url);
 
     setStatusMessage("created");
     setLoading(false);

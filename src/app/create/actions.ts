@@ -19,7 +19,7 @@ export async function getSignedURL() {
   if (!session) return { failure: "Not authenticated" };
 
   const putObjectCommand = new PutObjectCommand({
-    Bucket: process.env.AWS_BUCKET!,
+    Bucket: process.env.AWS_BUCKET_NAME!,
     Key: "test-file",
   });
 
