@@ -5,6 +5,8 @@ import timeAgoShort from "@/utils/timeAgoShort";
 
 import { type Post } from "@/db/queries/postList";
 
+import DeleteButton from "./delete-button";
+
 type PostProps = {
   post: Post;
 };
@@ -52,7 +54,9 @@ export default function PostItem({ post }: PostProps) {
             </div>
           )}
 
-          {/* <PostActions /> */}
+          <div className="flex gap-2 my-5">
+            <DeleteButton id={post.id} />
+          </div>
         </div>
       </div>
       <div className="flex gap-2 dark:text-neutral-400 text-neutral-600">
