@@ -14,6 +14,15 @@ const s3 = new S3Client({
   },
 });
 
+const acceptedTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "video/mp4",
+  "video/webm",
+];
+
 export async function getSignedURL() {
   const session = await auth();
   if (!session) return { failure: "Not authenticated" };

@@ -44,7 +44,7 @@ export default function CreatePostForm({
           method: "PUT",
           body: file,
           headers: {
-            "Content-Type": file?.type ?? "application/octet-stream",
+            "Content-Type": file.type,
           },
         });
       }
