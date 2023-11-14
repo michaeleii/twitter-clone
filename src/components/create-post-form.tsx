@@ -1,6 +1,6 @@
 "use client";
 
-import { getSignedURL } from "@/app/create/actions";
+import { createPost, getSignedURL } from "@/app/create/actions";
 import { computeSHA256 } from "@/utils/computeSHA256";
 import Image from "next/image";
 import { useState } from "react";
@@ -54,6 +54,9 @@ export default function CreatePostForm({
           },
         });
         console.log(mediaId);
+
+        //create post
+        await createPost({ content, mediaId });
       }
     } catch (e) {
       setStatusMessage("Failed to create post");

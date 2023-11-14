@@ -6,10 +6,11 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-import { db } from "@/db";
+import { db, eq, and } from "@/db";
 import { media } from "@/db/schema/media";
 
 import crypto from "crypto";
+import { posts } from "@/db/schema/post";
 const generateFileName = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
 
@@ -74,4 +75,31 @@ export async function getSignedURL(
     .then((res) => res[0]);
 
   return { success: { url: signedUrl, mediaId: mediaResult.id } };
+}
+
+type CreatePostArgs = {
+  content: string;
+  mediaId?: number;
+};
+export async function createPost({ content, mediaId }: CreatePostArgs) {
+  const session = await auth();
+  if (!session) return { failure: "Not authenticated" };
+
+  if (mediaId) {
+    const mediaItem = await db
+      .select()
+      .from(media)
+      .where(and(eq(media.id, mediaId), eq(media.userId, session.user.id)))
+      .then((res) => res[0]);
+    if (!mediaItem) return { failure: "Media not found" };
+  }
+  const postItem = await db
+    .insert(posts)
+    .values({ userId: session.user.id, content })
+    .returning()
+    .then((res) => res[0]);
+
+  if (mediaId) {
+    db.update(media).set({ postId: postItem.id }).where(eq(media.id, mediaId));
+  }
 }
