@@ -1,6 +1,7 @@
 "use client";
 
 import { getSignedURL } from "@/app/create/actions";
+import { computeSHA256 } from "@/utils/computeSHA256";
 import Image from "next/image";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -30,7 +31,12 @@ export default function CreatePostForm({
     try {
       if (file) {
         setStatusMessage("uploading file");
-        const signedURLResult = await getSignedURL();
+        const checksum = await computeSHA256(file);
+        const signedURLResult = await getSignedURL(
+          file.type,
+          file.size,
+          checksum
+        );
 
         if (signedURLResult.failure !== undefined) {
           setStatusMessage("Failed to create post");
