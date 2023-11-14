@@ -46,6 +46,12 @@ export default function PostItem({ post }: PostProps) {
               />
             </div>
           )}
+          {post.media && post.media.type === "video" && (
+            <div className="rounded-lg overflow-hidden relative w-80 h-80">
+              <video src={post.media.url} controls />
+            </div>
+          )}
+
           {/* <PostActions /> */}
         </div>
       </div>

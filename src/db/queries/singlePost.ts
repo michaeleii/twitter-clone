@@ -1,7 +1,7 @@
 import { db, eq } from "@/db";
 
-import { posts } from "@/db/schema/post";
-import { userTable } from "@/db/schema/user";
+import { posts } from "@/db/schema/posts";
+import { userTable } from "@/db/schema/users";
 import { media } from "@/db/schema/media";
 import { mightFail } from "might-fail";
 

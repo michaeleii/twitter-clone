@@ -11,7 +11,7 @@ import { media } from "@/db/schema/media";
 
 import crypto from "crypto";
 
-import { posts } from "@/db/schema/post";
+import { posts } from "@/db/schema/posts";
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";

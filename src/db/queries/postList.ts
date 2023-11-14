@@ -1,7 +1,7 @@
 import { db, eq, sql, desc } from "@/db";
 
-import { posts as postsTable } from "@/db/schema/post";
-import { users as usersTable } from "@/db/schema/user";
+import { posts as postsTable } from "@/db/schema/posts";
+import { users as usersTable } from "@/db/schema/users";
 import { media as mediaTable } from "@/db/schema/media";
 
 const baseQuery = db

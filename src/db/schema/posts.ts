@@ -6,7 +6,7 @@ import {
   AnyPgColumn,
   pgTableCreator,
 } from "drizzle-orm/pg-core";
-import { users } from "./user";
+import { users } from "./users";
 import { createInsertSchema } from "drizzle-zod";
 
 export const pgTable = pgTableCreator((name) => `twitter_clone_${name}`);

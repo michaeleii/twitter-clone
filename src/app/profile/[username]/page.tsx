@@ -1,7 +1,7 @@
 import MainContainer from "@/components/main-container";
 import UserProfile from "@/components/user-profile";
 import { db, eq } from "@/db";
-import { users } from "@/db/schema/user";
+import { users } from "@/db/schema/users";
 import Image from "next/image";
 
 export default async function UserProfilePage({

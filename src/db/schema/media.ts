@@ -6,8 +6,8 @@ import {
   timestamp,
   pgTableCreator,
 } from "drizzle-orm/pg-core";
-import { posts } from "./post";
-import { users } from "./user";
+import { posts } from "./posts";
+import { users } from "./users";
 
 export const pgTable = pgTableCreator((name) => `twitter_clone_${name}`);
 

@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/GitHub";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
-import { pgTable } from "./db/schema/user";
+import { pgTable } from "./db/schema/users";
 
 export const authConfig = {
   providers: [GitHub],
