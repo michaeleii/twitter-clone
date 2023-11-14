@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import timeAgoShort from "@/utils/timeAgoShort";
 
-import { type Result as Post } from "@/db/queries/postList";
+import { type Post } from "@/db/queries/postList";
 
 type PostProps = {
   post: Post;
@@ -37,13 +37,14 @@ export default function PostItem({ post }: PostProps) {
             <p className="font-light">{post.content}</p>
           </Link>
           {post.media && post.media.type === "image" && (
-            <Image
-              src={post.media.url}
-              alt={post.media.url}
-              width={post.media.width}
-              height={post.media.height}
-              className="rounded-xl"
-            />
+            <div className="rounded-lg overflow-hidden relative w-80 h-80">
+              <Image
+                src={post.media.url}
+                alt={post.media.url}
+                fill
+                className="object-cover"
+              />
+            </div>
           )}
           {/* <PostActions /> */}
         </div>

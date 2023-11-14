@@ -5,26 +5,14 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "www.gravatar.com",
-        port: "",
-        pathname: "/avatar/**",
-      },
-      {
-        protocol: "https",
-        hostname: "images.clerk.dev",
-        port: "",
-        pathname: "/uploaded/**",
-      },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-        port: "",
-        pathname: "/seed/**",
       },
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
-        port: "",
-        pathname: "/u/**",
+      },
+      {
+        protocol: "https",
+        hostname: "twitter-clone-local-michael.s3.us-west-2.amazonaws.com",
       },
     ],
   },
