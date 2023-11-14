@@ -17,7 +17,7 @@ export const media = pgTable("media", {
   id: serial("id").primaryKey(),
   type: mediaType("type").notNull(),
   url: text("url").notNull(),
-  userId: integer("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => users.id),
   postId: integer("post_id").references(() => posts.id),
