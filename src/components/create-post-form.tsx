@@ -44,7 +44,7 @@ export default function CreatePostForm({
           throw new Error(signedURLResult.failure);
         }
 
-        const url = signedURLResult.success.url;
+        const { url, mediaId } = signedURLResult.success;
 
         await fetch(url, {
           method: "PUT",
@@ -53,6 +53,7 @@ export default function CreatePostForm({
             "Content-Type": file.type,
           },
         });
+        console.log(mediaId);
       }
     } catch (e) {
       setStatusMessage("Failed to create post");

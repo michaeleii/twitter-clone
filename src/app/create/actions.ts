@@ -63,7 +63,7 @@ export async function getSignedURL(
     expiresIn: 60,
   });
 
-  const mediaResult = db
+  const mediaResult = await db
     .insert(media)
     .values({
       userId: session.user.id,
@@ -73,5 +73,5 @@ export async function getSignedURL(
     .returning({ id: media.id })
     .then((res) => res[0]);
 
-  return { success: { url: signedUrl } };
+  return { success: { url: signedUrl, mediaId: mediaResult.id } };
 }
