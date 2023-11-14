@@ -29,6 +29,7 @@ export default function CreatePostForm({
     // Do all the image upload and everything
     console.log(content, file);
     try {
+      let mediaId: number | undefined;
       if (file) {
         setStatusMessage("uploading file");
         const checksum = await computeSHA256(file);
@@ -44,7 +45,8 @@ export default function CreatePostForm({
           throw new Error(signedURLResult.failure);
         }
 
-        const { url, mediaId } = signedURLResult.success;
+        const { url } = signedURLResult.success;
+        mediaId = signedURLResult.success.mediaId;
 
         await fetch(url, {
           method: "PUT",

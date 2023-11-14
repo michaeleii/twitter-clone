@@ -10,7 +10,12 @@ import { db, eq, and } from "@/db";
 import { media } from "@/db/schema/media";
 
 import crypto from "crypto";
+
 import { posts } from "@/db/schema/post";
+
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
 const generateFileName = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
 
@@ -102,4 +107,6 @@ export async function createPost({ content, mediaId }: CreatePostArgs) {
   if (mediaId) {
     db.update(media).set({ postId: postItem.id }).where(eq(media.id, mediaId));
   }
+  revalidatePath("/");
+  redirect("/");
 }
