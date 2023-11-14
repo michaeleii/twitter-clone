@@ -6,20 +6,24 @@ import {
   timestamp,
   pgTableCreator,
 } from "drizzle-orm/pg-core";
+import { posts } from "./post";
+import { users } from "./user";
 
 export const pgTable = pgTableCreator((name) => `twitter_clone_${name}`);
 
 export const mediaType = pgEnum("media_type", ["image", "video"]);
 
-export const mediaTable = pgTable("media", {
+export const media = pgTable("media", {
   id: serial("id").primaryKey(),
   type: mediaType("type").notNull(),
   url: text("url").notNull(),
-  width: integer("width").notNull(),
-  height: integer("height").notNull(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+  postId: integer("post_id").references(() => posts.id),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
 });
 
-export type Media = typeof mediaTable.$inferSelect;
+export type Media = typeof media.$inferSelect;

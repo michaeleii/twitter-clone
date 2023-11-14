@@ -6,6 +6,13 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+import { db } from "@/db";
+import { media } from "@/db/schema/media";
+
+import crypto from "crypto";
+const generateFileName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString("hex");
+
 const s3 = new S3Client({
   region: process.env.AWS_REGION!,
   credentials: {
@@ -43,7 +50,7 @@ export async function getSignedURL(
 
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
-    Key: "test-file",
+    Key: generateFileName(),
     ContentType: type,
     ContentLength: size,
     ChecksumSHA256: checksum,
@@ -55,6 +62,16 @@ export async function getSignedURL(
   const signedUrl = await getSignedUrl(s3, putObjectCommand, {
     expiresIn: 60,
   });
+
+  const mediaResult = db
+    .insert(media)
+    .values({
+      userId: session.user.id,
+      type: type.startsWith("image") ? "image" : "video",
+      url: signedUrl.split("?")[0],
+    })
+    .returning({ id: media.id })
+    .then((res) => res[0]);
 
   return { success: { url: signedUrl } };
 }
