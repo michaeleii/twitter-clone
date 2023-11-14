@@ -11,7 +11,7 @@ export default function DeleteButton({ id }: { id: number }) {
       disabled={isPending}
       onClick={async () => startTransition(async () => await deletePost(id))}
     >
-      Delete
+      {isPending ? "Deleting..." : "Delete"}
     </button>
   );
 }
