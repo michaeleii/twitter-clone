@@ -23,13 +23,33 @@ const acceptedTypes = [
   "video/webm",
 ];
 
-export async function getSignedURL() {
+const maxFileSize = 1024 * 1024 * 10; // 10MB
+
+export async function getSignedURL(
+  type: string,
+  size: number,
+  checksum: string
+) {
   const session = await auth();
   if (!session) return { failure: "Not authenticated" };
+
+  if (!acceptedTypes.includes(type)) {
+    return { failure: "Invalid file type" };
+  }
+
+  if (size > maxFileSize) {
+    return { failure: "File too large" };
+  }
 
   const putObjectCommand = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME!,
     Key: "test-file",
+    ContentType: type,
+    ContentLength: size,
+    ChecksumSHA256: checksum,
+    Metadata: {
+      userId: session.user.id,
+    },
   });
 
   const signedUrl = await getSignedUrl(s3, putObjectCommand, {
