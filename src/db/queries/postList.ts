@@ -1,41 +1,41 @@
-import { db, desc, eq } from "@/db";
+import { db, eq, sql, desc } from "@/db";
 
-import { posts } from "@/db/schema/post";
-import { users } from "@/db/schema/user";
-import { media } from "@/db/schema/media";
-import { mightFail } from "might-fail";
+import { posts as postsTable } from "@/db/schema/post";
+import { users as usersTable } from "@/db/schema/user";
+import { media as mediaTable } from "@/db/schema/media";
 
-export const getAllPosts = async () => {
-  const query = db
-    .select({
-      id: posts.id,
-      content: posts.content,
-      createdAt: posts.createdAt,
-      user: {
-        id: users.id,
-        name: users.name,
-        image: users.image,
-      },
-      media: {
-        id: media.id,
-        type: media.type,
-        url: media.url,
-        width: media.width,
-        height: media.height,
-      },
-    })
-    .from(posts)
-    .innerJoin(users, eq(users.id, posts.userId))
-    .leftJoin(media, eq(media.id, posts.mediaId))
-    .orderBy(desc(posts.createdAt))
-    .limit(100)
-    .prepare("select_posts_for_feed");
+const baseQuery = db
+  .select({
+    id: postsTable.id,
+    content: postsTable.content,
+    createdAt: postsTable.createdAt,
+    user: {
+      id: usersTable.id,
+      name: usersTable.name,
+      image: usersTable.image,
+    },
+    media: {
+      id: mediaTable.id,
+      type: mediaTable.type,
+      url: mediaTable.url,
+    },
+  })
+  .from(postsTable)
+  .innerJoin(usersTable, eq(usersTable.id, postsTable.userId))
+  .leftJoin(mediaTable, eq(mediaTable.postId, postsTable.id));
 
-  const { result: posts, error: postsError } = await mightFail(query.execute());
+export const postFeedQuery = baseQuery
+  .orderBy(desc(postsTable.createdAt))
+  .prepare("posts_for_feed");
 
-  return { posts, postsError };
-};
+export const postResponsesQuery = baseQuery
+  .where(eq(postsTable.replyId, sql.placeholder("id")))
+  .orderBy(desc(postsTable.createdAt))
+  .prepare("posts_for_post_response_feed");
 
-export type Result = NonNullable<
-  Awaited<ReturnType<typeof getAllPosts>>["posts"]
->[0];
+export const userPostsQuery = baseQuery
+  .where(eq(usersTable.id, sql.placeholder("userId")))
+  .orderBy(desc(postsTable.createdAt))
+  .prepare("posts_for_user_feed");
+
+export type Post = Awaited<ReturnType<typeof postFeedQuery.execute>>[0];

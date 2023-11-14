@@ -1,15 +1,9 @@
 import { notFound } from "next/navigation";
 import PostItem from "./post";
-import { getAllPosts } from "@/db/queries/postList";
-import ErrorMessage from "./error-message";
+import { postFeedQuery } from "@/db/queries/postList";
 
 export default async function PostList() {
-  const { posts, postsError } = await getAllPosts();
-
-  if (postsError) {
-    console.error(postsError);
-    return <ErrorMessage message="Error connecting to database." />;
-  }
+  const posts = await postFeedQuery.execute();
 
   if (!posts) {
     notFound();

@@ -105,7 +105,10 @@ export async function createPost({ content, mediaId }: CreatePostArgs) {
     .then((res) => res[0]);
 
   if (mediaId) {
-    db.update(media).set({ postId: postItem.id }).where(eq(media.id, mediaId));
+    await db
+      .update(media)
+      .set({ postId: postItem.id })
+      .where(eq(media.id, mediaId));
   }
   revalidatePath("/");
   redirect("/");
