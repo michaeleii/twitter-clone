@@ -23,7 +23,8 @@ export async function deletePost(postId: number) {
       .returning()
       .then((res) => res[0]);
 
-    await db.delete(postsTable).where(eq(postsTable.id, postId)).returning();
+    await db.delete(postsTable).where(eq(postsTable.id, postId));
+    await db.delete(mediaTable).where(eq(mediaTable.postId, postId));
 
     if (deletedMedia) {
       const url = deletedMedia.url;
