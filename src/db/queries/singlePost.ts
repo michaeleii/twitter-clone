@@ -1,7 +1,7 @@
 import { db, eq } from "@/db";
 
 import { posts } from "@/db/schema/posts";
-import { userTable } from "@/db/schema/users";
+import { users } from "@/db/schema/users";
 import { media } from "@/db/schema/media";
 import { mightFail } from "might-fail";
 
@@ -13,22 +13,20 @@ export const getPostById = async (id: number) => {
         content: posts.content,
         createdAt: posts.createdAt,
         user: {
-          id: userTable.id,
-          username: userTable.username,
-          avatar: userTable.avatar,
+          id: users.id,
+          name: users.name,
+          image: users.image,
         },
         media: {
           id: media.id,
           type: media.type,
           url: media.url,
-          width: media.width,
-          height: media.height,
         },
       })
       .from(posts)
       .where(eq(posts.id, id))
-      .innerJoin(userTable, eq(userTable.id, posts.userId))
-      .leftJoin(media, eq(media.id, posts.mediaId))
+      .innerJoin(users, eq(users.id, posts.userId))
+      .leftJoin(media, eq(media.postId, posts.id))
       .then((result) => result[0])
   );
 
